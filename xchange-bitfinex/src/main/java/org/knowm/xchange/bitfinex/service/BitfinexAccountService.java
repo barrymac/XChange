@@ -16,6 +16,7 @@ import org.knowm.xchange.dto.account.AccountInfo;
 import org.knowm.xchange.dto.account.Fee;
 import org.knowm.xchange.dto.account.FundingRecord;
 import org.knowm.xchange.exceptions.ExchangeException;
+import org.knowm.xchange.exceptions.NotYetImplementedForExchangeException;
 import org.knowm.xchange.service.account.AccountService;
 import org.knowm.xchange.service.trade.params.DefaultTradeHistoryParamsTimeSpan;
 import org.knowm.xchange.service.trade.params.DefaultWithdrawFundsParams;
@@ -64,11 +65,36 @@ public class BitfinexAccountService extends BitfinexAccountServiceRaw implements
       // we have to use one of these for now: Exchange -
       // to be able to withdraw instantly after trading for example
       // The wallet to withdraw from, can be “trading”, “exchange”, or “deposit”.
-      String walletSelected = "exchange";
+      String walletSelected = BitfinexWalletType.EXCHANGE_WALLET.getValue();
       // We have to convert XChange currencies to Bitfinex currencies: can be “bitcoin”, “litecoin”
       // or
       // “ether” or “tether” or “wire”.
       return withdraw(type, walletSelected, amount, address);
+    } catch (BitfinexException e) {
+      throw BitfinexErrorAdapter.adapt(e);
+    }
+  }
+
+  /**
+   * Wallet Transfer support
+   *
+   * @param currency
+   * @param amount
+   * @param walletFrom
+   * @param walletTo
+   * @return
+   * @throws IOException
+   */
+  public String transferFunds(Currency currency, BigDecimal amount, BitfinexWalletType walletFrom, BitfinexWalletType walletTo)
+      throws IOException {
+    try {
+      String type = BitfinexUtils.convertToBitfinexWithdrawalType(currency.toString());
+      String wltFrom = walletFrom.getValue();
+      // We have to convert XChange currencies to Bitfinex currencies: can be “bitcoin”, “litecoin”
+      // or
+      // “ether” or “tether” or “wire”.
+      throw new NotYetImplementedForExchangeException();
+//      return "transfer";
     } catch (BitfinexException e) {
       throw BitfinexErrorAdapter.adapt(e);
     }
