@@ -16,7 +16,6 @@ import org.knowm.xchange.dto.account.AccountInfo;
 import org.knowm.xchange.dto.account.Fee;
 import org.knowm.xchange.dto.account.FundingRecord;
 import org.knowm.xchange.exceptions.ExchangeException;
-import org.knowm.xchange.exceptions.NotYetImplementedForExchangeException;
 import org.knowm.xchange.service.account.AccountService;
 import org.knowm.xchange.service.trade.params.DefaultTradeHistoryParamsTimeSpan;
 import org.knowm.xchange.service.trade.params.DefaultWithdrawFundsParams;
@@ -36,13 +35,11 @@ public class BitfinexAccountService extends BitfinexAccountServiceRaw implements
    * @param exchange
    */
   public BitfinexAccountService(Exchange exchange) {
-
     super(exchange);
   }
 
   @Override
   public AccountInfo getAccountInfo() throws IOException {
-
     return new AccountInfo(BitfinexAdapters.adaptWallets(getBitfinexAccountInfo()));
   }
 
@@ -75,31 +72,38 @@ public class BitfinexAccountService extends BitfinexAccountServiceRaw implements
     }
   }
 
-  /**
-   * Wallet Transfer support
-   *
-   * @param currency
-   * @param amount
-   * @param walletFrom
-   * @param walletTo
-   * @return
-   * @throws IOException
-   */
-  public String transferFunds(Currency currency, BigDecimal amount, BitfinexWalletType walletFrom, BitfinexWalletType walletTo)
-      throws IOException {
-    try {
-      String type = BitfinexUtils.convertToBitfinexWithdrawalType(currency.toString());
-      String wltFrom = walletFrom.getValue();
-      // We have to convert XChange currencies to Bitfinex currencies: can be “bitcoin”, “litecoin”
-      // or
-      // “ether” or “tether” or “wire”.
-      throw new NotYetImplementedForExchangeException();
-//      return "transfer";
-    } catch (BitfinexException e) {
-      throw BitfinexErrorAdapter.adapt(e);
-    }
-  }
-
+  //  /**
+  //   * Wallet Transfer support
+  //   *
+  //   * @param currency
+  //   * @param amount
+  //   * @param walletFrom
+  //   * @param walletTo
+  //   * @return
+  //   * @throws IOException
+  //   */
+  //  public String transferFunds(
+  //      Currency currency,
+  //      BigDecimal amount,
+  //      BitfinexWalletType walletFrom,
+  //      BitfinexWalletType walletTo)
+  //      throws IOException {
+  //    try {
+  //      String type = BitfinexUtils.convertToBitfinexWithdrawalType(currency.toString());
+  //
+  //      //            throw new NotYetImplementedForExchangeException();
+  //      return transfer(type, walletFrom, walletTo, amount);
+  //    } catch (BitfinexException e) {
+  //      throw BitfinexErrorAdapter.adapt(e);
+  //    }
+  //  }
+  //
+  //  public String transfer(
+  //          String type, BitfinexWalletType walletFrom, BitfinexWalletType walletTo, BigDecimal
+  // amount) {
+  //    return null;
+  //  }
+  //
   /**
    * Used for XRP withdrawals
    *
@@ -158,6 +162,20 @@ public class BitfinexAccountService extends BitfinexAccountServiceRaw implements
       throw BitfinexErrorAdapter.adapt(e);
     }
   }
+
+  //  public String transferFunds(TransferFundsParams params) throws IOException {
+  //    try {
+  //      DefaultTransferFundsParams defaultParams = (DefaultTransferFundsParams) params;
+  //      return transferFunds(
+  //          defaultParams.getCurrency(),
+  //          defaultParams.getAmount(),
+  //          defaultParams.getFrom(),
+  //          defaultParams.getTo());
+  //
+  //    } catch (BitfinexException e) {
+  //      throw BitfinexErrorAdapter.adapt(e);
+  //    }
+  //  }
 
   @Override
   public String requestDepositAddress(Currency currency, String... arguments) throws IOException {

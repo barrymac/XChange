@@ -1,6 +1,7 @@
 package org.knowm.xchange.bitfinex.v2;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import org.knowm.xchange.bitfinex.v2.dto.BitfinexExceptionV2;
 import org.knowm.xchange.bitfinex.v2.dto.EmptyRequest;
 import org.knowm.xchange.bitfinex.v2.dto.account.LedgerEntry;
+import org.knowm.xchange.bitfinex.v2.dto.account.Transfer;
 import org.knowm.xchange.bitfinex.v2.dto.trade.ActiveOrder;
 import org.knowm.xchange.bitfinex.v2.dto.trade.Position;
 import org.knowm.xchange.bitfinex.v2.dto.trade.Trade;
@@ -95,6 +97,26 @@ public interface BitfinexAuthenticated extends Bitfinex {
       @QueryParam("start") Long startTimeMillis,
       @QueryParam("end") Long endTimeMillis,
       @QueryParam("limit") Long limit,
+      EmptyRequest empty)
+      throws IOException, BitfinexExceptionV2;
+
+  /** https://api.bitfinex.com/v2/auth/w/transfer */
+  @POST
+  @Path("auth/w/transfer")
+  List<Transfer> createTransfer(
+      @HeaderParam(BFX_NONCE) SynchronizedValueFactory<Long> nonce,
+      @HeaderParam(BFX_APIKEY) String apiKey,
+      @HeaderParam(BFX_SIGNATURE) ParamsDigest signature,
+      @QueryParam("currency") String currency,
+      /*
+      from: 'margin',  // to move funds from the margin to exchange wallet
+              to: 'exchange',
+              currency: 'USD',
+              amount: '123.45'
+              */
+      @QueryParam("from") String from,
+      @QueryParam("to") String to,
+      @QueryParam("amount") BigDecimal amount,
       EmptyRequest empty)
       throws IOException, BitfinexExceptionV2;
 }

@@ -24,6 +24,7 @@ import org.knowm.xchange.bitfinex.v1.dto.account.BitfinexWithdrawalResponse;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexNonceOnlyRequest;
 import org.knowm.xchange.bitfinex.v2.dto.EmptyRequest;
 import org.knowm.xchange.bitfinex.v2.dto.account.LedgerEntry;
+import org.knowm.xchange.bitfinex.v2.dto.account.Transfer;
 import org.knowm.xchange.exceptions.ExchangeException;
 
 public class BitfinexAccountServiceRaw extends BitfinexBaseService {
@@ -212,6 +213,19 @@ public class BitfinexAccountServiceRaw extends BitfinexBaseService {
         startTimeMillis,
         endTimeMillis,
         limit,
+        EmptyRequest.INSTANCE);
+  }
+
+  public List<Transfer> transfer(String currency, String from, String to, BigDecimal amount)
+      throws IOException {
+    return bitfinexV2.createTransfer(
+        exchange.getNonceFactory(),
+        apiKey,
+        signatureV2,
+        currency,
+        from,
+        to,
+        amount,
         EmptyRequest.INSTANCE);
   }
 }

@@ -42,3 +42,4 @@ GRTAGS
 GPATH
 GSYMS
 /.gradle/
+*build/
