@@ -14,7 +14,7 @@ public class DefaultTransferFundsParams implements TransferFundsParams {
   public DefaultTransferFundsParams(
       BitfinexWalletType from, BitfinexWalletType to, Currency currency, BigDecimal amount) {
     this.from = from;
-    this.to = from;
+    this.to = to;
     this.currency = currency;
     this.amount = amount;
   }
