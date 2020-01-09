@@ -72,39 +72,7 @@ public class BitfinexAccountService extends BitfinexAccountServiceRaw implements
     }
   }
 
-  //  /**
-  //   * Wallet Transfer support
-  //   *
-  //   * @param currency
-  //   * @param amount
-  //   * @param walletFrom
-  //   * @param walletTo
-  //   * @return
-  //   * @throws IOException
-  //   */
-  //  public String transferFunds(
-  //      Currency currency,
-  //      BigDecimal amount,
-  //      BitfinexWalletType walletFrom,
-  //      BitfinexWalletType walletTo)
-  //      throws IOException {
-  //    try {
-  //      String type = BitfinexUtils.convertToBitfinexWithdrawalType(currency.toString());
-  //
-  //      //            throw new NotYetImplementedForExchangeException();
-  //      return transfer(type, walletFrom, walletTo, amount);
-  //    } catch (BitfinexException e) {
-  //      throw BitfinexErrorAdapter.adapt(e);
-  //    }
-  //  }
-  //
-  //  public String transfer(
-  //          String type, BitfinexWalletType walletFrom, BitfinexWalletType walletTo, BigDecimal
-  // amount) {
-  //    return null;
-  //  }
-  //
-  /**
+ /**
    * Used for XRP withdrawals
    *
    * @param currency
